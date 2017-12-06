@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Listen to Steem</title>
+        <meta name="description" content="Realtime Steem transaction visualizer. See and hear new transfers as they propagate the Steem network.">
+        <meta name="keywords" content="steem,transactions,visualizer,crypto,blockchain,listentosteem">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" type="text/css" href="engine.min.css">
+        <link rel="stylesheet" type="text/css" href="engine/nouislider/nouislider.custom.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/howler/1.1.11/howler.min.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/3.1.1/jquery.nouislider.min.js" type="text/javascript"></script>
+
+        <script src="engine/reconnecting-websocket.min.js" type="text/javascript"></script>
+        <script src="engine/extend.js" type="text/javascript"></script>
+        <script src="statusbox.js" type="text/javascript"></script>
+        <script src="socket.js" type="text/javascript"></script>
+        <script src="sound.js" type="text/javascript"></script>
+        <script src="floatable.js" type="text/javascript"></script>
+        <script src="block.js" type="text/javascript"></script>
+        <script src="transaction.js" type="text/javascript"></script>
+        <script src="main.js" type="text/javascript"></script>
+
+        <script src="//cdn.steemjs.com/lib/latest/steem.min.js"></script>
+        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110802533-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-110802533-1');
+        </script>
+    </head>
+    <body>
+        <div id="header" class="serif interface">
+            <h1>Listen to Steem</h1>
+            <div id="headerInfo">
+                <p>
+					Realtime Steem transaction visualizer.
+                </p>
+                <p>
+					Donations get highlighted: <span id="donationAddress" style="color: yellow"><a href="steem://transfer?to=jesta&amount=1.000&symbol=STEEM&memo=Donation%20for%20Listen%20To%20Steem">@listentosteem</a></span>
+                    <br />
+                    <span id="musicianDonation"></span>
+                </p>
+                <p class="subdued">
+					This demo app <a href="https://listen.steemliberator.com">Listen to Steem</a> &bull; <a href="https://github.com/netuoso/listentosteem" target="_blank">Source Code</a>
+                </p>
+                <p class="subdued">
+                    <a href="https://github.com/MaxLaumeister/Listen-To-Bitcoin">Based on code by Maximillian Laumeister</a>
+                </p>
+                
+            </div>
+        </div>
+        <div id="pageDiv"></div>
+        <div id="connectionStatus" class="monospace">
+            <div id="connectionInnerDiv" class="interface">
+                <p>
+                    <label>
+                        <input id="blockchainCheckBox" type="checkbox" checked="checked" onchange="this.checked ? TransactionSocket.init() : TransactionSocket.close();">
+                        <span id="blockchainStatus"></span></label>
+                </p>
+            </div>
+        </div>
+        <div id="volumeWrapper" class="interface">
+            <div id="volumeControl"></div>
+            <div id="volumeSlider" class="noUiSlider"></div>
+        </div>
+        <div id="soundControls" class="interface">
+            <div id="scalePitch" class="monospace">
+                <p>Select Instrument:
+                    <select onchange="Sound.change($(this).val())">
+                        <option value="0">Celesta</option>
+                        <option value="1">Planet</option>
+                        <option value="2">Wikki</option>
+                    </select>
+                </p>
+                <br />
+                <p>
+                    <label>
+                        <input id="scalePitchCheckBox" type="checkbox" checked="checked" onchange="globalScalePitch = this.checked">
+						Scale pitch with transaction amount<br />(bigger transaction = deeper sound)</label>
+                </p>
+            </div>
+        </div>
+        <div id="hideInterface" class="serif" onclick="toggleInterface()">[ Hide Interface ]</div>
+        <div id="noJavascript">
+            <p>
+				Please enable Javascript, or try a different web browser.
+            </p>
+        </div>
+        <div id="noInternetExplorer">
+            <p>
+				Sorry, <span style="color: yellow;">no support for Internet Explorer.</span>
+            </p>
+            <p>
+				Try <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>, <a href="http://www.getfirefox.com" target="_blank">Firefox</a> or Safari.
+            </p>
+            <br />
+            <p id="clickSuppress" style="font-size: 0.5em;">
+                <span style="cursor: pointer;"> (Click Here to Suppress this warning.) </span>
+            </p>
+        </div>
+    </body>
+</html>
