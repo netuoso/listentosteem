@@ -16,7 +16,14 @@ TransactionSocket.init = function () {
             var txTo = operations[1].to;
 
             setTimeout(function () {
-                new Transaction(txAmount, txTo === 'listentosteem', null, txCurrency);
+                new Transaction(txAmount, true, null, txCurrency);
+            }, Math.random() * DELAY_CAP);
+        } else if (operations[0] == 'vote') {
+            var txAmount = parseInt(operations[1].weight/100);
+            var txCurrency = 'Vote';
+
+            setTimeout(function () {
+                new Transaction(txAmount, false, null, txCurrency);
             }, Math.random() * DELAY_CAP);
         }
     })

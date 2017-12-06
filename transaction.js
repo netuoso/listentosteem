@@ -6,15 +6,25 @@ function Transaction(steemAmount, highlight, currency, currencyName) {
 
 	this.addImage(bubbleImage, this.width, this.height);
 	
-	var steemString = steemAmount.toFixed(3) + ' ' + currencyName;
+	var isFlag = false;
+
+	if (currencyName == 'Vote') {
+		var steemString = steemAmount + '%<br/>' + currencyName;
+		var isFlag = steemAmount < 0;
+		var steemAmount = Math.random()*(20-1)+1;
+	} else {
+		var steemString = steemAmount.toFixed(3) + ' ' + currencyName;
+	}
 	
 	if (steemString == "&#321;0.00")
 	steemString = "<&#321;0.01";
 	
-	if (!highlight) {
-		this.addText(steemString);
+	if (highlight) {
+		this.addText('<span style="color: yellow;">' + steemString + '</span>');
+	} else if (isFlag) {
+		this.addText('<span style="color: red;">' + steemString + '</span>');
 	} else {
-		this.addText('<span style="color: yellow;">' + steemString + '</span><br /><span style="color: cyan;">Donation</span><br /><span style="color: lime;">Thanks!</span>');
+		this.addText(steemString);
 	}
 	this.initPosition();
 
